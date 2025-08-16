@@ -11,10 +11,14 @@ macro_rules! println {
 
 #[macro_export]
 macro_rules! dbgbreak {
-    () => { unsafe { core::arch::asm!("xchg bx,bx") } };
+    () => {
+        unsafe { core::arch::asm!("xchg bx,bx") }
+    };
 }
 
 #[macro_export]
 macro_rules! int3 {
-    () => { unsafe { core::arch::asm!("int3") } };
+    () => {
+        unsafe { core::arch::asm!("int3") }
+    };
 }

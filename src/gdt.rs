@@ -1,9 +1,9 @@
 use lazy_static::lazy_static;
+use x86_64::instructions::segmentation::{CS, DS, SS};
 use x86_64::registers::segmentation::Segment;
-use x86_64::structures::gdt::{GlobalDescriptorTable,Descriptor,SegmentSelector};
-use x86_64::instructions::segmentation::{CS,DS,SS};
+use x86_64::structures::gdt::{Descriptor, GlobalDescriptorTable, SegmentSelector};
 
-pub fn init(){
+pub fn init() {
     GDT.0.load();
     unsafe {
         CS::set_reg(GDT.1.kernel_cs);

@@ -89,5 +89,4 @@ pub fn hcf() -> ! {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn __chkstk() -> () {
-}
+pub extern "C" fn __chkstk() -> () {}

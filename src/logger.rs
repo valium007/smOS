@@ -1,7 +1,7 @@
+use crate::println;
 use core::arch::asm;
 use log::*;
 use spin::Mutex;
-use crate::println;
 
 pub unsafe fn outb(port: u16, val: u8) {
     asm!("out dx, al", in("dx") port, in("al") val, options(preserves_flags, nomem, nostack));

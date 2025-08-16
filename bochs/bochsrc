@@ -1,0 +1,15 @@
+megs: 512
+romimage: file=./bochs/BIOS-bochs-latest
+vgaromimage: file=./bochs/VGABIOS-lgpl-latest.bin
+
+boot: cdrom
+
+ata0-master: type=cdrom, path="./image.iso", status=inserted
+
+display_library: nogui
+
+magic_break: enabled=1
+
+port_e9_hack: enabled=1
+
+cpu: count=1

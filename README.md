@@ -14,4 +14,4 @@ Open cmd/terminal and run
 cargo build -Z build-std=core,panic_abort
 ./run.sh
 ```
-to build the kernel and make the iso to boot in bochs
+to build the kernel and make the iso to boot in qemu

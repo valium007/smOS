@@ -2,15 +2,19 @@
 #![no_main]
 #![allow(unsafe_op_in_unsafe_fn)]
 #![allow(static_mut_refs)]
+#![allow(non_camel_case_types)]
+#![allow(non_snake_case)]
 #![feature(abi_x86_interrupt)]
 
+pub mod apic;
 pub mod gdt;
+pub mod globals;
 pub mod idt;
 pub mod logger;
-pub mod macros;
-mod mm;
+pub mod mm;
 pub mod shim;
 pub mod start;
+pub mod util;
 
 use limine::BaseRevision;
 use limine::request::{

@@ -20,5 +20,5 @@
   "linker": "lld-link",
   "linker-flavor": "msvc",
   "max-atomic-width": 128,
-  "target-pointer-width": "64"
+  "target-pointer-width": 64
 }

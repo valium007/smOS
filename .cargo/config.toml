@@ -1,10 +1,5 @@
-[build]
-target = ".cargo/target.json"
+[target.windows-msvc]
 
-rustflags = [
-    "-C", "link-arg=/base:0xffffffff80000000",
-    "-C", "link-arg=/subsystem:console",
-    "-C", "link-arg=/entry:kmain",
-    "-C", "link-arg=/opt:noref",
-    "-C", "link-arg=/pdb:./target/target/debug/kernel.pdb",
-]
+[unstable]
+build-std-features = ["compiler-builtins-mem"]
+build-std = ["core", "compiler_builtins"]

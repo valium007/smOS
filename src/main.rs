@@ -4,25 +4,23 @@
 #![allow(static_mut_refs)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
-#![feature(abi_x86_interrupt)]
+#![feature(abi_custom)]
+#![allow(unused_macros)]
 
-pub mod apic;
-pub mod gdt;
-pub mod globals;
-pub mod idt;
+pub mod arch;
+pub mod hal;
 pub mod logger;
 pub mod mm;
-pub mod shim;
 pub mod start;
 pub mod util;
 
 use limine::BaseRevision;
-use limine::request::{
-    ExecutableAddressRequest, FramebufferRequest, HhdmRequest, MemoryMapRequest, RequestsEndMarker,
-    RequestsStartMarker,
-};
+use limine::RequestsEndMarker;
+use limine::RequestsStartMarker;
+use limine::request::RsdpRequest;
+use limine::request::{ExecutableAddressRequest, FramebufferRequest, HhdmRequest, MemmapRequest};
 
-use crate::shim::hcf;
+use crate::arch::hcf;
 use crate::start::startup;
 
 #[used]
@@ -31,7 +29,7 @@ static _START_MARKER: RequestsStartMarker = RequestsStartMarker::new();
 
 #[used]
 #[unsafe(link_section = ".requests$ba")]
-static BASE_REVISION: BaseRevision = BaseRevision::new();
+static BASE_REVISION: BaseRevision = BaseRevision::with_revision(6);
 
 #[used]
 #[unsafe(link_section = ".requests$bb")]
@@ -47,7 +45,11 @@ static EXECUTABLE_ADDRESS_REQUEST: ExecutableAddressRequest = ExecutableAddressR
 
 #[used]
 #[unsafe(link_section = ".request$be")]
-static MMAP_REQUEST: MemoryMapRequest = MemoryMapRequest::new();
+static MMAP_REQUEST: MemmapRequest = MemmapRequest::new();
+
+#[used]
+#[unsafe(link_section = ".request$be")]
+static RSDP_REQUEST: RsdpRequest = RsdpRequest::new();
 
 #[used]
 #[unsafe(link_section = ".requests$c")]
@@ -62,6 +64,6 @@ unsafe extern "C" fn kmain() -> ! {
 
 #[panic_handler]
 fn panic(_info: &core::panic::PanicInfo) -> ! {
-    println!("PANIC!! {}", _info);
+    log::error!("PANIC!! {}", _info);
     hcf();
 }

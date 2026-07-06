@@ -1,0 +1,15 @@
+{
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "cargo": {
+          "allTargets": false,
+          "target": "x86_64-pc-windows-msvc"
+        },
+        "check": {
+          "allTargets": false
+        }
+      }
+    }
+  }
+}

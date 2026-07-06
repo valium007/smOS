@@ -1,0 +1,47 @@
+# Minimal UEFI smoke config (fw_cfg enabled)
+plugin_ctrl: unmapped=1, biosdev=1, speaker=0, serial=1, parallel=0, extfpuirq=1
+config_interface: textconfig
+display_library: nogui
+
+memory: host=1024, guest=1024
+
+# OVMF firmware
+romimage: file="C:\Users\valium\Desktop\bochs-build\share\bochs\RELEASEX64_OVMF.fd", address=0x0, options=none
+vgaromimage: file="C:\Users\valium\Desktop\bochs-build\share\bochs\VGABIOS-lgpl-latest.bin"
+
+# UEFI boot requires fw_cfg
+fw_cfg: enabled=1
+
+boot: disk
+floppy_bootsig_check: disabled=0
+
+ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
+ata0-master: type=disk, path="C:\Users\valium\Desktop\smOS\smOS.vhd", mode=vpc
+
+ata1: enabled=1, ioaddr1=0x170, ioaddr2=0x370, irq=15
+ata1-master: type=none
+ata1-slave: type=none
+ata2: enabled=0
+ata3: enabled=0
+
+# UEFI GOP/video init expects VGA as a PCI device
+pci: enabled=1, chipset=i440fx, slot1=pcivga
+vga: extension=vbe, update_freq=60, realtime=1
+cpu: count=1, ips=100000000, model=corei7_sandy_bridge_2600k, reset_on_triple_fault=0, cpuid_limit_winnt=0, ignore_bad_msrs=0, mwait_is_nop=1
+
+print_timestamps: enabled=0
+port_e9_hack: enabled=1
+magic_break: enabled=1
+private_colormap: enabled=0
+clock: sync=none, time0=local, rtc_sync=0
+
+debug: action=ignore
+info: action=ignore
+error: action=report
+panic: action=report
+
+log: C:\Users\valium\Desktop\smOS\log.txt
+logprefix: %t%e%d
+
+keyboard: type=mf, serial_delay=250, paste_delay=100000, user_shortcut=ctrl-alt-del
+mouse: type=ps2, enabled=0, toggle=ctrl+mbutton
